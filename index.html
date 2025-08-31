@@ -1,0 +1,114 @@
+<!doctype html><html lang="fr"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>GWINRL — 72h pour reprendre la main</title>
+<style>
+:root{--bg:#071634;--bg2:#0a1e4b;--panel:#0c1e44;--ink:#eaf1ff;--muted:#bcd0ff;--accent:#2d6bff;--accent2:#56e8c6}
+*{box-sizing:border-box} html,body{margin:0;padding:0;background:radial-gradient(1200px 600px at 20% -10%, #0f2a64 0,#071634 40%,#05112a 100%);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+.container{max-width:1040px;margin:0 auto;padding:18px 14px}
+.header{position:relative;border-radius:24px;border:1px solid rgba(255,255,255,.08);padding:18px;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02))}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.badge{font-size:12px;color:var(--muted);padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05)}
+h1{font-size:clamp(24px,5.8vw,38px);line-height:1.2;margin:8px 0 6px;word-break:break-word}
+.lead{color:var(--muted);font-size:15px;margin:0 0 8px}
+.langs{display:flex;gap:6px;margin-bottom:8px}
+.langs button{background:transparent;border:1px solid rgba(255,255,255,.12);color:var(--muted);padding:4px 8px;border-radius:10px}
+.langs button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.logo{position:absolute;right:14px;bottom:14px;width:54px;height:54px;opacity:.95}
+.grid{display:grid;gap:14px;margin-top:14px}
+@media(min-width:860px){.grid{grid-template-columns:1fr 1fr}}
+.panel{background:var(--panel);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:14px}
+.panel h3{margin:4px 0 8px}
+.list{line-height:1.55;margin:0;padding-left:18px}
+.kpis{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
+.kpi{flex:1 1 140px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:10px}
+.kpi .v{font-weight:800;font-size:18px}
+.small{font-size:12px;color:var(--muted)}
+.code{display:flex;gap:8px;align-items:center;margin-top:6px}
+.code input{flex:1 1 auto;background:#061432;border:1px solid rgba(255,255,255,.16);color:var(--ink);padding:10px 12px;border-radius:12px}
+.btn-ghost{flex:0 0 auto;background:transparent;border:1px solid rgba(255,255,255,.2);color:#cfe6ff;padding:10px 12px;border-radius:12px}
+.cta{position:sticky;bottom:0;background:linear-gradient(180deg,transparent,rgba(7,22,52,.94));padding:12px 10px;border-top:1px solid rgba(255,255,255,.12);backdrop-filter:blur(8px)}
+.cta-inner{max-width:1040px;margin:0 auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.select{display:flex;gap:8px;align-items:center}
+.btn{flex:1 1 160px;background:linear-gradient(180deg,#3a79ff,#2156ff);border:none;color:#fff;padding:14px 16px;border-radius:14px;font-weight:800}
+.btn[disabled]{opacity:.45}
+.btn-outline{flex:1 1 160px;background:transparent;border:1px solid rgba(255,255,255,.25);color:#cfe6ff;padding:14px 16px;border-radius:14px}
+.waiver{display:flex;gap:8px;align-items:flex-start;font-size:12px;color:#9ec4ff}
+footer{margin:26px 0 80px;color:#98b3ff}
+a{color:#9ec4ff}
+</style>
+<link rel="icon" href="assets/logo.svg"/><script defer src="config.js"></script></head>
+<body><div class="container">
+  <div class="langs"><button data-lang="fr" class="active">FR</button><button data-lang="nl">NL</button><button data-lang="en">EN</button></div>
+  <div class="header">
+    <div class="badges"><span class="badge" id="b1">Places limitées</span><span class="badge" id="b2">Stripe sécurisé</span><span class="badge" id="b3">Garantie 14j (sauf accès immédiat)</span></div>
+    <h1 id="title">GWINRL — 72h pour reprendre la main</h1>
+    <p class="lead" id="lead">On applique ensemble. Zéro blabla, des actions concrètes pour souffler financièrement.</p>
+    <img class="logo" src="assets/logo.svg" alt="logo"/>
+  </div>
+
+  <div class="grid">
+    <div class="panel">
+      <h3 id="what">Au programme</h3>
+      <ul class="list" id="bullets">
+        <li>Réductions polies de factures (télécom/Internet/assurances).</li>
+        <li>Switchs malins (énergie/banque) + bonus d’entrée si pertinent.</li>
+        <li>Cash immédiat : revente express (modèles d’annonces + grille de prix).</li>
+        <li>“Claim Accelerator” : UE261, garantie, frais bancaires (modèles inclus).</li>
+      </ul>
+      <div class="kpis">
+        <div class="kpi"><div class="v"><span id="inscrits">0</span> inscrits</div><div class="small">objectif <span id="target">150</span></div></div>
+        <div class="kpi"><div class="v">ELITE : <span id="elite">8</span> places</div><div class="small">audit 1:1</div></div>
+        <div class="kpi"><div class="v" id="countdown">—j —h —m</div><div class="small">clôture</div></div>
+      </div>
+    </div>
+    <div class="panel">
+      <h3>FAQ</h3>
+      <p><b>Légal ?</b><br/><span id="faq1">Oui : droits consommateurs (UE261/garantie/frais) + renégociations normales. Pas de conseil financier individuel.</span></p>
+      <p><b>Paiement ?</b><br/><span id="faq2">Stripe hébergé (Apple/Google Pay, cartes, Bancontact). Aucune donnée stockée chez nous.</span></p>
+      <p><b>Combien ?</b><br/><span id="faq3">Selon vos contrats et situations. On vise des résultats réalistes et documentés.</span></p>
+      <p><b>Retour/garantie ?</b><br/><span id="faq4">Par défaut : 14j. Si vous choisissez l’accès immédiat, vous renoncez au droit de rétractation.</span></p>
+      <div class="code"><input id="code" placeholder="Code parrainage (ex: AMI10)"/><button id="apply" class="btn-ghost">Appliquer</button></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3>Tarifs</h3>
+    <ul class="list" id="plans">
+      <li><b>Starter — 99€</b> : 3 lives + replay 7j, scripts FR/NL/EN, checklist 72h.</li>
+      <li><b>Pro — 179€</b> : Starter + modèles d’annonces, scripts avancés, scoreboard 30j.</li>
+      <li><b>VIP — 249€</b> : Pro + pack “Claim Accelerator” + Q/R prioritaire.</li>
+      <li><b>ELITE — 399€</b> : VIP + audit 1:1 (15–20’).</li>
+    </ul>
+  </div>
+
+  <footer class="small">
+    <p><a href="legal/terms.html">Conditions</a> • <a href="legal/refund.html">Remboursements</a> • <a href="legal/privacy.html">Confidentialité</a></p>
+    <p>Support : <a id="supportMail" href="mailto:hello@gwinrl.com">hello@gwinrl.com</a></p>
+  </footer>
+</div>
+
+<div class="cta"><div class="cta-inner">
+  <div class="select"><input type="checkbox" id="eliteToggle"/><label for="eliteToggle">ELITE</label></div>
+  <label class="waiver"><input type="checkbox" id="waiver"/><span id="waiverText">Je veux l’accès immédiat et je renonce au droit de rétractation de 14 jours.</span></label>
+  <button class="btn" id="pay" disabled>Payer (Stripe)</button>
+  <button class="btn-outline" id="crypto" disabled>USDT/USDC</button>
+</div></div>
+
+<script>
+const T={fr:{title:"GWINRL — 72h pour reprendre la main",lead:"On applique ensemble. Zéro blabla, des actions concrètes pour souffler financièrement.",what:"Au programme",faq1:"Oui : droits consommateurs (UE261/garantie/frais) + renégociations normales. Pas de conseil financier individuel.",faq2:"Stripe hébergé (Apple/Google Pay, cartes, Bancontact). Aucune donnée stockée chez nous.",faq3:"Selon vos contrats et situations. On vise des résultats réalistes et documentés.",faq4:"Par défaut : 14j. Si vous choisissez l’accès immédiat, vous renoncez au droit de rétractation.",waiver:"Je veux l’accès immédiat et je renonce au droit de rétractation de 14 jours."},
+nl:{title:"GWINRL — 72u om opnieuw grip te krijgen",lead:"We doen het samen. Geen blabla — concrete acties om ademruimte te krijgen.",what:"Programma",faq1:"Ja: consumentenrechten (EU261/garantie/kosten) + normale heronderhandelingen. Geen individueel financieel advies.",faq2:"Gehoste Stripe (Apple/Google Pay, kaarten, Bancontact). We bewaren geen gegevens.",faq3:"Afhankelijk van je contracten/situaties. We mikken op realistische, gedocumenteerde resultaten.",faq4:"Standaard: 14 dagen. Bij onmiddellijke toegang doe je afstand van het herroepingsrecht.",waiver:"Ik wil onmiddellijke toegang en doe afstand van het herroepingsrecht (14 dagen)."},
+en:{title:"GWINRL — 72h to take back control",lead:"We execute together. No fluff — concrete actions for breathing room.",what:"What’s inside",faq1:"Yes: consumer rights (EU261/warranty/fees) + normal renegotiations. No individual financial advice.",faq2:"Hosted Stripe (Apple/Google Pay, cards, Bancontact). We store no card data.",faq3:"Depends on contracts/situation. We aim for realistic, documented wins.",faq4:"Default: 14 days. If you choose immediate access, you waive the right of withdrawal.",waiver:"I want immediate access and I waive the 14‑day right of withdrawal."}};
+const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s); let lang="fr", referral=false;
+$$(".langs button").forEach(b=>b.addEventListener("click",()=>{lang=b.dataset.lang; $$(".langs button").forEach(x=>x.classList.toggle("active",x===b)); const tr=T[lang]; $("#title").textContent=tr.title; $("#lead").textContent=tr.lead; $("#what").textContent=tr.what; $("#faq1").textContent=tr.faq1; $("#faq2").textContent=tr.faq2; $("#faq3").textContent=tr.faq3; $("#faq4").textContent=tr.faq4; $("#waiverText").textContent=tr.waiver;}));
+(function(){const tr=T[lang]; $("#title").textContent=tr.title;})();
+const C=window.GWINRL_CONFIG; function fmt(n){return new Intl.NumberFormat(lang).format(n);}
+function refreshFomo(){$("#inscrits").textContent=fmt(C.fomo.soldStart); $("#target").textContent=fmt(C.fomo.soldTarget); $("#elite").textContent=fmt(C.fomo.eliteSeatsLeft);}
+refreshFomo();
+function tick(){const end=new Date(C.fomo.countdownISO).getTime(), now=Date.now(); let d=Math.max(0,end-now); const m=Math.floor(d/60000)%60,h=Math.floor(d/3600000)%24,day=Math.floor(d/86400000); $("#countdown").textContent=`${day}j ${h}h ${m}m`; requestAnimationFrame(()=>setTimeout(tick,1000));} tick();
+$("#apply").addEventListener("click",()=>{const v=$("#code").value.trim().toUpperCase(); referral=(C.codes||[]).includes(v); alert(referral?(lang==="fr"?"Code appliqué (-10%)":lang==="nl"?"Code toegepast (-10%)":"Code applied (-10%)"):(lang==="fr"?"Code invalide":lang==="nl"?"Ongeldige code":"Invalid code"));});
+const waiver=$("#waiver"), pay=$("#pay"), crypto=$("#crypto"); function togglePay(){const on=waiver.checked; pay.disabled=!on; crypto.disabled=!on;} waiver.addEventListener("change",togglePay); togglePay();
+function openPay(cryptoMode=false){const elite=$("#eliteToggle").checked; const group=(referral?(cryptoMode?C.crypto.referral:C.stripe.referral):(cryptoMode?C.crypto.normal:C.stripe.normal)); const url=elite?group.elite:group.vip||group.pro||group.starter; if(!url){alert(lang==="fr"?"Lien de paiement manquant":"Payment link missing");return;} window.location.href=url;}
+pay.addEventListener("click",()=>openPay(false)); crypto.addEventListener("click",()=>openPay(true));
+if(C.support&&C.support.email){$("#supportMail").href="mailto:"+C.support.email; $("#supportMail").textContent=C.support.email;}
+</script>
+</body></html>

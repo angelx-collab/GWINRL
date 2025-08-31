@@ -46,30 +46,32 @@ window.GWINRL_I18N = {
     eliteLabel: "ELITE",
     waiver: "Je veux l’accès immédiat et je renonce au droit de rétractation de 14 jours."
   },
-  nl: {
-    badges: ["Beperkte plaatsen","Veilige Stripe","14d garantie (behalve onmiddellijke toegang)"],
-    title: "GWINRL — 72u om opnieuw grip te krijgen",
-    lead: "We doen het samen. Geen blabla — concrete acties om ademruimte te krijgen.",
-    bullets: [
-      "Vriendelijke verlagingen van rekeningen (telecom/internet/verzekeringen).",
-      "Slimme switches (energie/bank) + welkomstbonus indien relevant.",
-      "Direct cash: snelle doorverkoop (advertentiemodellen + prijstabel).",
-      "“Claim Accelerator”: EU261, garantie, bankkosten (modellen inbegrepen)."
-    ],
-    eliteLabel: "ELITE",
-    waiver: "Ik wil onmiddellijke toegang en doe afstand van het herroepingsrecht (14 dagen)."
-  },
+
   en: {
-    badges: ["Limited seats","Secure Stripe","14-day guarantee (except instant access)"],
+    badges: ["Limited seats","Stripe secure","14-day guarantee (except immediate access)"],
     title: "GWINRL — 72h to take back control",
     lead: "We execute together. No fluff — concrete actions for breathing room.",
     bullets: [
-      "Polite bill reductions (telco/internet/insurance).",
-      "Smart switches (energy/bank) + signup bonus when relevant.",
+      "Polite bill reductions (tel/Internet/insurance).",
+      "Smart switches (energy/bank) + signup bonuses when relevant.",
       "Instant cash: quick resale (ad templates + price grid).",
       "“Claim Accelerator”: EU261, warranty, bank fees (templates included)."
     ],
     eliteLabel: "ELITE",
-    waiver: "I want immediate access and waive the 14-day right of withdrawal."
+    waiver: "I want immediate access and I waive the 14-day right of withdrawal."
+  },
+
+  nl: {
+    badges: ["Beperkte plaatsen","Veilig Stripe","14-dagen garantie (behalve directe toegang)"],
+    title: "GWINRL — 72u om opnieuw grip te krijgen",
+    lead: "We doen het samen. Geen blabla — concrete acties voor ademruimte.",
+    bullets: [
+      "Vriendelijke verlaging van facturen (telecom/internet/verzekering).",
+      "Slimme overstappen (energie/bank) + welkomstbonus indien relevant.",
+      "Direct cash: snelle doorverkoop (advertentiesjablonen + prijstabel).",
+      "“Claim Accelerator”: EU261, garantie, bankkosten (sjablonen inbegrepen)."
+    ],
+    eliteLabel: "ELITE",
+    waiver: "Ik wil onmiddellijke toegang en doe afstand van het herroepingsrecht (14 dagen)."
   }
 };

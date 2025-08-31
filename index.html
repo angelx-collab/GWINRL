@@ -223,25 +223,43 @@
   gate();
 
   // ======= Paiement =======
-  function selectedStripeUrl(){
-    const codes = (C.codes||[]);
-    const qp = new URLSearchParams(location.search);
-    const code = qp.get("code");
-    const isRef = code && codes.includes(code);
-    const group = isRef ? (C.stripe && C.stripe.referral) : (C.stripe && C.stripe.normal);
-    return (group && group.elite) || "#";
-  }
-  payBtn.addEventListener("click", ()=>{ location.href = selectedStripeUrl(); });
+  function pickPlan(){
+  const qp = new URLSearchParams(location.search);
+  const plan = (qp.get("plan") || "").toLowerCase();
+  if (["starter","pro","vip","elite"].includes(plan)) return plan;
 
-  function selectedCryptoUrl(){
-    const codes = (C.codes||[]);
-    const qp = new URLSearchParams(location.search);
-    const code = qp.get("code");
-    const isRef = code && codes.includes(code);
-    const group = isRef ? (C.crypto && C.crypto.referral) : (C.crypto && C.crypto.normal);
-    return (group && group.elite) || "#";
-  }
-  cryptoBtn.addEventListener("click", ()=>{ const u = selectedCryptoUrl(); if(u && u!=="#") location.href=u; });
+  const eliteBox = document.querySelector('input[type="checkbox"][name="elite"], #elite, .elite');
+  if (eliteBox && eliteBox.checked) return "elite";
+
+  return "starter";
+}
+
+function selectedStripeUrl(){
+  const qp = new URLSearchParams(location.search);
+  const code = (qp.get("code") || "").toUpperCase();
+  const isRef = (window.GWINRL_CONFIG.codes || []).includes(code);
+
+  const plan = pickPlan();
+  const groups = window.GWINRL_CONFIG.stripe || {};
+  const table = isRef ? groups.referral : groups.normal;
+  const url = table && table[plan];
+
+  if (!url) return "#";
+  return code ? url + (url.includes("?") ? "&" : "?") + "ref=" + encodeURIComponent(code) : url;
+}
+
+function selectedCryptoUrl(){
+  const qp = new URLSearchParams(location.search);
+  const code = (qp.get("code") || "").toUpperCase();
+  const isRef = (window.GWINRL_CONFIG.codes || []).includes(code);
+
+  const plan = pickPlan();
+  const groups = window.GWINRL_CONFIG.crypto || {};
+  const table = isRef ? groups.referral : groups.normal;
+  const url = table && table[plan];
+
+  return url || "#";
+}
 
   // Initial render
   render();

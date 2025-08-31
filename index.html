@@ -89,17 +89,35 @@
 
     <div class="cta">
       <div class="cta-inner">
-        <div class="select">
-          <label class="tier">
-            <input id="apply" type="checkbox"> <span id="tierLabel">ELITE</span>
-          </label>
-          <label class="waiver">
-            <input id="waiver" type="checkbox">
-            <span id="waiverLabel">Je veux l’accès immédiat et je renonce au droit de rétractation de 14 jours.</span>
-          </label>
-          <button class="btn" id="pay" disabled>Payer (Stripe)</button>
-          <button class="btn-outline" id="crypto">USDT/USDC</button>
-        </div>
+      <!-- choix du plan -->
+<div class="select">
+  <label>
+    <input type="radio" name="plan" value="starter">
+    <span>Starter</span>
+  </label>
+  <label>
+    <input type="radio" name="plan" value="pro">
+    <span>Pro</span>
+  </label>
+  <label>
+    <input type="radio" name="plan" value="vip">
+    <span>VIP</span>
+  </label>
+  <label>
+    <input type="radio" name="plan" value="elite">
+    <span>ELITE</span>
+  </label>
+
+  <!-- case légale obligatoire -->
+  <label class="waiver">
+    <input id="waiver" type="checkbox">
+    <span id="waiverLabel">Je veux l’accès immédiat et je renonce au droit de rétractation de 14 jours.</span>
+  </label>
+
+  <!-- boutons de paiement -->
+  <button class="btn" id="pay" disabled>Payer (Stripe)</button>
+  <button class="btn-outline" id="crypto">USDT/USDC</button>
+</div>
       </div>
     </div>
 

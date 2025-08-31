@@ -111,4 +111,253 @@ function openPay(cryptoMode=false){const elite=$("#eliteToggle").checked; const 
 pay.addEventListener("click",()=>openPay(false)); crypto.addEventListener("click",()=>openPay(true));
 if(C.support&&C.support.email){$("#supportMail").href="mailto:"+C.support.email; $("#supportMail").textContent=C.support.email;}
 </script>
-</body></html>
+</body></html><!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>GWINRL — 72h pour reprendre la main</title>
+  <link rel="icon" href="assets/logo.svg"/>
+  <style>
+    :root{
+      --bg:#071634; --panel:#0b214a; --ink:#eaf1ff; --muted:#a9c0ff;
+      --accent:#5aa9ff; --accent2:#35d2b4;
+      --ring:rgba(255,255,255,.08); --ring2:rgba(0,0,0,.18);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;background:radial-gradient(1200px 800px at 50% -200px,#0a2658 0%,#071634 55%,#051029 100%);
+      color:var(--ink); font:16px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial, "Noto Sans", sans-serif}
+    .container{max-width:1040px;margin:0 auto;padding:20px}
+    .langs{display:flex;gap:8px;margin:8px 0 14px}
+    .langs button{background:transparent;border:1px solid var(--ring);color:var(--ink);padding:6px 10px;border-radius:10px}
+    .langs button.active{background:var(--panel);border-color:var(--accent)}
+    .panel{background:var(--panel);border:1px solid var(--ring);border-radius:18px;padding:18px;box-shadow:0 10px 26px var(--ring2)}
+    .badges{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+    .badge{font-size:12px;color:var(--muted);background:#0a2a63;border:1px solid var(--ring);padding:6px 10px;border-radius:999px}
+    h1{margin:8px 0 8px;font-weight:800;font-size:clamp(26px,5.5vw,40px);letter-spacing:.3px}
+    .lead{margin:0 0 6px;color:var(--muted)}
+    .logo{position:absolute;right:16px;top:16px;width:52px;height:52px;opacity:.95}
+    .grid{display:grid;gap:14px;margin-top:14px}
+    @media(min-width:860px){.grid{grid-template-columns:1.1fr .9fr}}
+    .list{margin:0;padding:0 0 0 18px;line-height:1.6}
+    .kpis{display:grid;gap:12px;grid-auto-flow:column;align-items:start}
+    .kpi{background:rgba(255,255,255,.04);border:1px solid var(--ring);border-radius:14px;padding:12px 14px}
+    .kpi b{font-size:20px}
+    .small{font-size:12px;color:var(--muted)}
+    .cta{position:sticky;bottom:0;background:linear-gradient(180deg,rgba(7,22,52,0) 0%, rgba(7,22,52,.7) 24%, rgba(7,22,52,1) 56%);padding:14px 0 10px;margin-top:16px;backdrop-filter:blur(4px)}
+    .cta-inner{max-width:1040px;margin:0 auto;padding:0 20px}
+    .select{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    label{display:flex;gap:8px;align-items:center}
+    .btn,.btn-outline{flex:1 1 160px;border-radius:12px;padding:12px 16px;border:0;font-weight:700}
+    .btn{background:linear-gradient(180deg,#56b1ff,#1667ff);color:white}
+    .btn[disabled]{opacity:.5;filter:grayscale(1)}
+    .btn-outline{background:transparent;border:1px solid var(--ring);color:var(--ink)}
+    footer{margin:22px 0 70px}
+    a{color:#9ec4ff}
+  </style>
+  <script defer src="config.js"></script>
+</head>
+<body>
+  <div class="container">
+
+    <div class="langs">
+      <button data-lang="fr" class="active">FR</button>
+      <button data-lang="nl">NL</button>
+      <button data-lang="en">EN</button>
+    </div>
+
+    <div class="panel header" style="position:relative">
+      <div class="badges" id="badges"></div>
+      <h1 id="title">GWINRL — 72h pour reprendre la main</h1>
+      <p class="lead" id="lead">On applique ensemble. Zéro blabla — des actions concrètes pour souffler.</p>
+      <img class="logo" src="assets/logo.svg" alt="logo"/>
+    </div>
+
+    <div class="grid">
+      <div class="panel">
+        <h3 id="insideTitle">Au programme</h3>
+        <ul class="list" id="bullets"></ul>
+      </div>
+
+      <div class="panel">
+        <div class="kpis">
+          <div class="kpi">
+            <div><b id="inscrits">21</b> inscrits</div>
+            <small>objectif 150</small>
+          </div>
+          <div class="kpi">
+            <div><b>ELITE : 8</b> places</div>
+            <small>audit 1:1</small>
+          </div>
+        </div>
+        <div class="small" style="margin-top:10px">
+          <p>
+            <a href="refund.html" id="refundLink">Garantie / Retours</a> —
+            <a href="terms.html" id="termsLink">Conditions</a>
+          </p>
+          <p>Support : <a id="supportMail" href="mailto:hello@gwinrl.com">hello@gwinrl.com</a></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta">
+      <div class="cta-inner">
+        <div class="select">
+          <label class="tier">
+            <input id="apply" type="checkbox"> <span id="tierLabel">ELITE</span>
+          </label>
+          <label class="waiver">
+            <input id="waiver" type="checkbox">
+            <span id="waiverLabel">Je veux l’accès immédiat et je renonce au droit de rétractation de 14 jours.</span>
+          </label>
+          <button class="btn" id="pay" disabled>Payer (Stripe)</button>
+          <button class="btn-outline" id="crypto">USDT/USDC</button>
+        </div>
+      </div>
+    </div>
+
+    <footer class="small">
+      <p><a href="legal/terms.html">Conditions</a></p>
+    </footer>
+  </div>
+
+  <script>
+  // ======= Textes par langue =======
+  const T = {
+    fr: {
+      badges: ["Places limitées","Stripe sécurisé","Garantie 14j (sauf accès immédiat)"],
+      title: "GWINRL — 72h pour reprendre la main",
+      lead:  "On applique ensemble. Zéro blabla — des actions concrètes pour souffler.",
+      insideTitle: "Au programme",
+      bullets: [
+        "Réductions polies de factures (télécom/Internet/assurances).",
+        "Switchs malins (énergie/banque) + bonus d’entrée si pertinent.",
+        "Cash immédiat : revente express (modèles d’annonces + grille de prix).",
+        "« Claim Accelerator » : UE261, garantie, frais bancaires (modèles inclus)."
+      ],
+      tierLabel:"ELITE",
+      waiverLabel:"Je veux l’accès immédiat et je renonce au droit de rétractation de 14 jours.",
+      pay:"Payer (Stripe)", crypto:"USDT/USDC",
+      refund:"Garantie / Retours", terms:"Conditions", inscritsWord:"inscrits"
+    },
+    nl: {
+      badges: ["Beperkte plaatsen","Beveiligde Stripe","14d garantie (behalve directe toegang)"],
+      title: "GWINRL — 72u om opnieuw grip te krijgen",
+      lead:  "We doen het samen. Geen blabla — concrete acties voor ademruimte.",
+      insideTitle: "Programma",
+      bullets: [
+        "Vriendelijke vermindering van facturen (telecom/internet/verzekeringen).",
+        "Slim overstappen (energie/bank) + welkomstbonus indien relevant.",
+        "Direct cash: snelle doorverkoop (advertentiemodellen + prijstabel).",
+        "“Claim Accelerator”: EU261, garantie, bankkosten (templates inbegrepen)."
+      ],
+      tierLabel:"ELITE",
+      waiverLabel:"Ik wil onmiddellijke toegang en doe afstand van het herroepingsrecht (14 dagen).",
+      pay:"Betalen (Stripe)", crypto:"USDT/USDC",
+      refund:"Garantie / Retouren", terms:"Voorwaarden", inscritsWord:"inschrijvingen"
+    },
+    en: {
+      badges: ["Limited seats","Secure Stripe","14-day guarantee (except immediate access)"],
+      title: "GWINRL — 72h to take back control",
+      lead:  "We execute together. No fluff — concrete actions for breathing room.",
+      insideTitle: "What’s inside",
+      bullets: [
+        "Polite bill reductions (telecom/internet/insurance).",
+        "Smart switches (energy/bank) + sign-up bonuses where relevant.",
+        "Instant cash: quick resale (ad templates + price grid).",
+        "“Claim Accelerator”: EU261, warranty, bank fee claims (templates included)."
+      ],
+      tierLabel:"ELITE",
+      waiverLabel:"I want immediate access and waive the 14-day right of withdrawal.",
+      pay:"Pay (Stripe)", crypto:"USDT/USDC",
+      refund:"Guarantee / Refunds", terms:"Terms", inscritsWord:"signups"
+    }
+  };
+
+  // ======= Helpers =======
+  const $  = s => document.querySelector(s);
+  const $$ = s => Array.from(document.querySelectorAll(s));
+  let lang = (document.documentElement.lang || "fr").toLowerCase();
+  if(!T[lang]) lang = "fr";
+
+  function render(){
+    const tr = T[lang];
+    document.documentElement.lang = lang;
+    $("#title").textContent = tr.title;
+    $("#lead").textContent = tr.lead;
+    $("#insideTitle").textContent = tr.insideTitle;
+
+    // Badges
+    const bad = $("#badges"); bad.innerHTML = "";
+    tr.badges.forEach(txt=>{
+      const s = document.createElement("span"); s.className="badge"; s.textContent=txt; bad.appendChild(s);
+    });
+
+    // Bullets
+    const ul = $("#bullets"); ul.innerHTML = "";
+    tr.bullets.forEach(li=>{ const el=document.createElement("li"); el.textContent=li; ul.appendChild(el); });
+
+    // Labels & buttons
+    $("#tierLabel").textContent = tr.tierLabel;
+    $("#waiverLabel").textContent = tr.waiverLabel;
+    $("#pay").textContent = tr.pay;
+    $("#crypto").textContent = tr.crypto;
+    $("#refundLink").textContent = tr.refund;
+    $("#termsLink").textContent = tr.terms;
+
+    // Mot "inscrits" (juste l’étiquette, pas la valeur)
+    const n = $("#inscrits").textContent;
+    $("#inscrits").parentElement.innerHTML = `<div><b id="inscrits">${n}</b> ${tr.inscritsWord}</div><small>objectif 150</small>`;
+  }
+
+  $$(".langs button").forEach(b=>b.addEventListener("click",()=>{
+    $$(".langs button").forEach(x=>x.classList.remove("active"));
+    b.classList.add("active");
+    lang = b.dataset.lang; render();
+  }));
+
+  // ======= Config externe (facultatif) =======
+  const C = window.GWINRL_CONFIG || {};
+  // Email support
+  const supportEmail = (C.support && C.support.email) || "hello@gwinrl.com";
+  const mail = $("#supportMail"); mail.href = `mailto:${supportEmail}`; mail.textContent = supportEmail;
+  // FOMO: inscrits init
+  const startIns = (C.fomo && C.fomo.soldStart) || 21;
+  $("#inscrits").textContent = startIns;
+
+  // ======= Activation du bouton =======
+  const apply  = $("#apply");
+  const waiver = $("#waiver");
+  const payBtn = $("#pay");
+  const cryptoBtn = $("#crypto");
+  function gate(){ payBtn.disabled = !(apply.checked && waiver.checked); }
+  apply.addEventListener("change", gate);
+  waiver.addEventListener("change", gate);
+  gate();
+
+  // ======= Paiement =======
+  function selectedStripeUrl(){
+    const codes = (C.codes||[]);
+    const qp = new URLSearchParams(location.search);
+    const code = qp.get("code");
+    const isRef = code && codes.includes(code);
+    const group = isRef ? (C.stripe && C.stripe.referral) : (C.stripe && C.stripe.normal);
+    return (group && group.elite) || "#";
+  }
+  payBtn.addEventListener("click", ()=>{ location.href = selectedStripeUrl(); });
+
+  function selectedCryptoUrl(){
+    const codes = (C.codes||[]);
+    const qp = new URLSearchParams(location.search);
+    const code = qp.get("code");
+    const isRef = code && codes.includes(code);
+    const group = isRef ? (C.crypto && C.crypto.referral) : (C.crypto && C.crypto.normal);
+    return (group && group.elite) || "#";
+  }
+  cryptoBtn.addEventListener("click", ()=>{ const u = selectedCryptoUrl(); if(u && u!=="#") location.href=u; });
+
+  // Initial render
+  render();
+  </script>
+</body>
+</html>

@@ -1,6 +1,50 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Merci — GWINRL</title><style>body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#071634;color:#eaf1ff;margin:0} .box{max-width:780px;margin:20px auto;padding:14px;background:#0c1e44;border:1px solid rgba(255,255,255,.12);border-radius:16px} a{color:#9ec4ff} ul{line-height:1.6}</style></head>
-<body><div class="box"><h1>Merci 🙌</h1>
-<p>Inscription confirmée. Prochaines étapes :</p>
-<ol><li>Un email arrive avec les liens de sessions.</li><li>Prépare : dernière facture télécom, liste d’abonnements, 3 objets à vendre.</li><li>Besoin d’aide ? <a href="mailto:hello@gwinrl.com">hello@gwinrl.com</a></li></ol>
-<p><a href="./">← Retour au site</a></p></div></body></html>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Merci pour votre achat !</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#071634; color:white; text-align:center; padding:40px; }
+    .pack { margin:20px auto; padding:20px; border:1px solid #5aa9ff; border-radius:8px; max-width:600px; }
+    a { color:#5aa9ff; text-decoration:none; font-weight:bold; }
+  </style>
+</head>
+<body>
+  <h1>🎉 Merci pour votre achat GWINRL !</h1>
+  <p>Voici votre contenu selon le pack choisi :</p>
+
+  <div id="starter" class="pack" style="display:none">
+    <h2>Pack Starter</h2>
+    <p>📘 Téléchargez votre guide PDF et tableau Excel :</p>
+    <a href="https://drive.google.com/XXXX">Télécharger Starter</a>
+  </div>
+
+  <div id="pro" class="pack" style="display:none">
+    <h2>Pack Pro</h2>
+    <p>📘 PDF + modèles + vidéo tutoriel + checklist :</p>
+    <a href="https://drive.google.com/YYYY">Télécharger Pro</a>
+  </div>
+
+  <div id="vip" class="pack" style="display:none">
+    <h2>Pack VIP</h2>
+    <p>🎥 Formation vidéo complète + simulateur Google Sheets :</p>
+    <a href="https://drive.google.com/ZZZZ">Accéder au contenu VIP</a>
+  </div>
+
+  <div id="elite" class="pack" style="display:none">
+    <h2>Pack Elite</h2>
+    <p>🎥 Formation complète + audit personnalisé 1:1</p>
+    <a href="https://calendly.com/tonlien/30min">Réserver votre appel 1:1</a><br>
+    <a href="https://drive.google.com/AAAA">Télécharger les bonus Elite</a>
+  </div>
+
+  <script>
+    // Détecter le pack acheté depuis l'URL
+    const qp = new URLSearchParams(window.location.search);
+    const plan = qp.get("plan");
+    if(plan) {
+      document.getElementById(plan)?.style.display = "block";
+    }
+  </script>
+</body>
+</html>

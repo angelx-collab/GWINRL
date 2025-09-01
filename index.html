@@ -321,39 +321,74 @@
   const waiver = $("#waiver");
   const payBtn = $("#pay");
   const cryptoBtn = $("#crypto");
-  function gate(){ payBtn.disabled = !(apply.checked && waiver.checked); }
-  apply.addEventListener("change", gate);
-  waiver.addEventListener("change", gate);
-  gate();
+  <script>
+// === Radios des packs (Starter / Pro / VIP / ELITE)
+// Assure-toi d'avoir <input type="radio" name="plan" value="starter|pro|vip|elite">
+const planRadios = Array.from(document.querySelectorAll('input[name="plan"]'));
 
-  // ===== Choisir le plan (starter, pro, vip, elite) =====
+// === Plan sélectionné
 function pickPlan(){
-  const qp = new URLSearchParams(location.search);
-  const plan = (qp.get("plan") || "").toLowerCase();
-
-  if (["starter","pro","vip","elite"].includes(plan)) {
-    return plan;
-  }
-  return "starter"; // valeur par défaut
+  const r = planRadios.find(x => x.checked);
+  return r ? r.value : null; // "starter" | "pro" | "vip" | "elite"
 }
 
-// ===== Sélectionner l'URL Stripe =====
+// === URL Stripe selon plan + code referral éventuel (?code=)
 function selectedStripeUrl(){
-  const plan = pickPlan();
-  const codes = (C.codes || []);
-  const qp = new URLSearchParams(location.search);
-  const code = qp.get("code");
+  const C = window.GWINRL_CONFIG || {};
+  const codes = (C.codes || []).map(c => (c||"").toUpperCase());
 
+  const qp   = new URLSearchParams(location.search);
+  const code = (qp.get("code") || "").toUpperCase();
   const isReferral = code && codes.includes(code);
-  const group = isReferral ? C.stripe.referral : C.stripe.normal;
 
-  return group[plan] || "#";
+  const groups = C.stripe || {};
+  const table  = isReferral ? groups.referral : groups.normal; // {starter, pro, vip, elite}
+
+  const plan = pickPlan();
+  if (!table || !plan) return null;
+
+  let url = table[plan] || null;
+  if (!url) return null;
+
+  // Optionnel: propager le code dans l'URL Stripe (si compatible)
+  if (code) {
+    url += (url.includes("?") ? "&" : "?") + "ref=" + encodeURIComponent(code);
+  }
+  return url;
 }
 
-// Quand on clique sur "Payer"
-payBtn.addEventListener("click", ()=>{
-  window.location.href = selectedStripeUrl();
+// === Activer / désactiver "Payer (Stripe)" selon plan + waiver + lien dispo
+function updatePay(){
+  const hasPlan = !!pickPlan();
+  const waived  = waiver && waiver.checked;
+  const url     = selectedStripeUrl();
+
+  // Activer seulement si OK
+  payBtn.disabled = !(hasPlan && waived && url);
+
+  // Si c'est un <a id="pay">, garder un href à jour
+  if (payBtn.tagName && payBtn.tagName.toLowerCase() === "a") {
+    payBtn.setAttribute("href", url || "#");
+  }
+}
+
+// === Écoutes
+planRadios.forEach(r => r.addEventListener("change", updatePay));
+if (waiver) waiver.addEventListener("change", updatePay);
+
+// === Clic "Payer (Stripe)" si c'est un <button>
+payBtn.addEventListener("click", (e) => {
+  const url = selectedStripeUrl();
+  if (!url || payBtn.disabled) {
+    e.preventDefault();
+    return;
+  }
+  window.location.href = url;
 });
+
+// Premier passage
+updatePay();
+</script>
 
   // Initial render
   render();

@@ -240,44 +240,34 @@
   waiver.addEventListener("change", gate);
   gate();
 
-  // ======= Paiement =======
-  function pickPlan(){
+  // ===== Choisir le plan (starter, pro, vip, elite) =====
+function pickPlan(){
   const qp = new URLSearchParams(location.search);
   const plan = (qp.get("plan") || "").toLowerCase();
-  if (["starter","pro","vip","elite"].includes(plan)) return plan;
 
-  const eliteBox = document.querySelector('input[type="checkbox"][name="elite"], #elite, .elite');
-  if (eliteBox && eliteBox.checked) return "elite";
-
-  return "starter";
+  if (["starter","pro","vip","elite"].includes(plan)) {
+    return plan;
+  }
+  return "starter"; // valeur par défaut
 }
 
+// ===== Sélectionner l'URL Stripe =====
 function selectedStripeUrl(){
-  const qp = new URLSearchParams(location.search);
-  const code = (qp.get("code") || "").toUpperCase();
-  const isRef = (window.GWINRL_CONFIG.codes || []).includes(code);
-
   const plan = pickPlan();
-  const groups = window.GWINRL_CONFIG.stripe || {};
-  const table = isRef ? groups.referral : groups.normal;
-  const url = table && table[plan];
+  const codes = (C.codes || []);
+  const qp = new URLSearchParams(location.search);
+  const code = qp.get("code");
 
-  if (!url) return "#";
-  return code ? url + (url.includes("?") ? "&" : "?") + "ref=" + encodeURIComponent(code) : url;
+  const isReferral = code && codes.includes(code);
+  const group = isReferral ? C.stripe.referral : C.stripe.normal;
+
+  return group[plan] || "#";
 }
 
-function selectedCryptoUrl(){
-  const qp = new URLSearchParams(location.search);
-  const code = (qp.get("code") || "").toUpperCase();
-  const isRef = (window.GWINRL_CONFIG.codes || []).includes(code);
-
-  const plan = pickPlan();
-  const groups = window.GWINRL_CONFIG.crypto || {};
-  const table = isRef ? groups.referral : groups.normal;
-  const url = table && table[plan];
-
-  return url || "#";
-}
+// Quand on clique sur "Payer"
+payBtn.addEventListener("click", ()=>{
+  window.location.href = selectedStripeUrl();
+});
 
   // Initial render
   render();

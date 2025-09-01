@@ -224,240 +224,62 @@ const waiver    = document.querySelector("#waiver");  // case à cocher
 const payBtn    = document.querySelector("#pay");     // bouton Stripe
 const cryptoBtn = document.querySelector("#crypto");  // bouton crypto
 <!-- === Activation bouton + redirection Stripe (NOUVELLE LOGIQUE) === -->
+<!-- Stripe (NOUVELLE LOGIQUE) -->
+<script>
 // radios des packs
 const planRadios = Array.from(document.querySelectorAll('input[name="plan"]'));
 
-
 // ===== Plan sélectionné =====
-function pickPlan(){
-  const r = planRadios.find(x => x.checked);
-  return r ? r.value : null; // "starter" | "pro" | "vip" | "elite" | null
-}
-
-// ===== URL Stripe selon plan + éventuel ?code=REF =====
-function selectedStripeUrl(){
-  const C     = window.GWINRL_CONFIG || {};
-  const qp    = new URLSearchParams(location.search);
-  const code  = (qp.get("code") || "").toUpperCase();
-  const isRef = (C.codes || []).map(x=>x.toUpperCase()).includes(code);
-
-  const group = isRef ? (C.stripe && C.stripe.referral)
-                      : (C.stripe && C.stripe.normal);
-
-  const plan  = pickPlan();
-  if (!plan || !group || !group[plan]) return null;
-  return group[plan];
-}
-
-// ===== Active/désactive le bouton selon plan + case =====
-function updatePayState(){
-  const enabled = !!pickPlan() && !!(waiver && waiver.checked);
-  if (payBtn) payBtn.disabled = !enabled;
-}
-
-// Écoutes
-planRadios.forEach(r => r.addEventListener('change', updatePayState));
-if (waiver) waiver.addEventListener('change', updatePayState);
-
-// Clic pay → redirection Stripe
-if (payBtn){
-  payBtn.addEventListener('click', () => {
-    const url = selectedStripeUrl();
-    if (url) window.location.href = url;
-  });
-}
-
-// Mise à jour initiale
-updatePayState();
-
-// clic pay
-if (payBtn){
-  payBtn.addEventListener('click', () => {
-    const url = selectedStripeUrl();
-    if (url) window.location.href = url;
-  });
-}
-
-// init
-updatePayState();
-</script>
-  // ======= Textes par langue =======
-  const T = {
-    fr: {
-      badges: ["Places limitées","Stripe sécurisé","Garantie 14j (sauf accès immédiat)"],
-      title: "GWINRL — 72h pour reprendre la main",
-      lead:  "On applique ensemble. Zéro blabla — des actions concrètes pour souffler.",
-      insideTitle: "Au programme",
-      bullets: [
-        "Réductions polies de factures (télécom/Internet/assurances).",
-        "Switchs malins (énergie/banque) + bonus d’entrée si pertinent.",
-        "Cash immédiat : revente express (modèles d’annonces + grille de prix).",
-        "« Claim Accelerator » : UE261, garantie, frais bancaires (modèles inclus)."
-      ],
-      tierLabel:"ELITE",
-      waiverLabel:"Je veux l’accès immédiat et je renonce au droit de rétractation de 14 jours.",
-      pay:"Payer (Stripe)", crypto:"USDT/USDC",
-      refund:"Garantie / Retours", terms:"Conditions", inscritsWord:"inscrits"
-    },
-    nl: {
-      badges: ["Beperkte plaatsen","Beveiligde Stripe","14d garantie (behalve directe toegang)"],
-      title: "GWINRL — 72u om opnieuw grip te krijgen",
-      lead:  "We doen het samen. Geen blabla — concrete acties voor ademruimte.",
-      insideTitle: "Programma",
-      bullets: [
-        "Vriendelijke vermindering van facturen (telecom/internet/verzekeringen).",
-        "Slim overstappen (energie/bank) + welkomstbonus indien relevant.",
-        "Direct cash: snelle doorverkoop (advertentiemodellen + prijstabel).",
-        "“Claim Accelerator”: EU261, garantie, bankkosten (templates inbegrepen)."
-      ],
-      tierLabel:"ELITE",
-      waiverLabel:"Ik wil onmiddellijke toegang en doe afstand van het herroepingsrecht (14 dagen).",
-      pay:"Betalen (Stripe)", crypto:"USDT/USDC",
-      refund:"Garantie / Retouren", terms:"Voorwaarden", inscritsWord:"inschrijvingen"
-    },
-    en: {
-      badges: ["Limited seats","Secure Stripe","14-day guarantee (except immediate access)"],
-      title: "GWINRL — 72h to take back control",
-      lead:  "We execute together. No fluff — concrete actions for breathing room.",
-      insideTitle: "What’s inside",
-      bullets: [
-        "Polite bill reductions (telecom/internet/insurance).",
-        "Smart switches (energy/bank) + sign-up bonuses where relevant.",
-        "Instant cash: quick resale (ad templates + price grid).",
-        "“Claim Accelerator”: EU261, warranty, bank fee claims (templates included)."
-      ],
-      tierLabel:"ELITE",
-      waiverLabel:"I want immediate access and waive the 14-day right of withdrawal.",
-      pay:"Pay (Stripe)", crypto:"USDT/USDC",
-      refund:"Guarantee / Refunds", terms:"Terms", inscritsWord:"signups"
-    }
-  };
-
-  // ======= Helpers =======
-  const $  = s => document.querySelector(s);
-  const $$ = s => Array.from(document.querySelectorAll(s));
-  let lang = (document.documentElement.lang || "fr").toLowerCase();
-  if(!T[lang]) lang = "fr";
-
-  function render(){
-    const tr = T[lang];
-    document.documentElement.lang = lang;
-    $("#title").textContent = tr.title;
-    $("#lead").textContent = tr.lead;
-    $("#insideTitle").textContent = tr.insideTitle;
-
-    // Badges
-    const bad = $("#badges"); bad.innerHTML = "";
-    tr.badges.forEach(txt=>{
-      const s = document.createElement("span"); s.className="badge"; s.textContent=txt; bad.appendChild(s);
-    });
-
-    // Bullets
-    const ul = $("#bullets"); ul.innerHTML = "";
-    tr.bullets.forEach(li=>{ const el=document.createElement("li"); el.textContent=li; ul.appendChild(el); });
-
-    // Labels & buttons
-    $("#tierLabel").textContent = tr.tierLabel;
-    $("#waiverLabel").textContent = tr.waiverLabel;
-    $("#pay").textContent = tr.pay;
-    $("#crypto").textContent = tr.crypto;
-    $("#refundLink").textContent = tr.refund;
-    $("#termsLink").textContent = tr.terms;
-
-    // Mot "inscrits" (juste l’étiquette, pas la valeur)
-    const n = $("#inscrits").textContent;
-    $("#inscrits").parentElement.innerHTML = `<div><b id="inscrits">${n}</b> ${tr.inscritsWord}</div><small>objectif 150</small>`;
-  }
-
-  $$(".langs button").forEach(b=>b.addEventListener("click",()=>{
-    $$(".langs button").forEach(x=>x.classList.remove("active"));
-    b.classList.add("active");
-    lang = b.dataset.lang; render();
-  }));
-
-  // ======= Config externe (facultatif) =======
-  const C = window.GWINRL_CONFIG || {};
-  // Email support
-  const supportEmail = (C.support && C.support.email) || "hello@gwinrl.com";
-  const mail = $("#supportMail"); mail.href = `mailto:${supportEmail}`; mail.textContent = supportEmail;
-  // FOMO: inscrits init
-  const startIns = (C.fomo && C.fomo.soldStart) || 21;
-  $("#inscrits").textContent = startIns;
-
-  // ======= Activation du bouton =======
-  const apply  = $("#apply");
-  const waiver = $("#waiver");
-  const payBtn = $("#pay");
-  const cryptoBtn = $("#crypto");
-  <script>
-// === Radios des packs (Starter / Pro / VIP / ELITE)
-// Assure-toi d'avoir <input type="radio" name="plan" value="starter|pro|vip|elite">
-const planRadios = Array.from(document.querySelectorAll('input[name="plan"]'));
-
-// === Plan sélectionné
 function pickPlan(){
   const r = planRadios.find(x => x.checked);
   return r ? r.value : null; // "starter" | "pro" | "vip" | "elite"
 }
 
-// === URL Stripe selon plan + code referral éventuel (?code=)
+// ===== URL Stripe selon plan + éventuel ?code= =====
 function selectedStripeUrl(){
-  const C = window.GWINRL_CONFIG || {};
-  const codes = (C.codes || []).map(c => (c||"").toUpperCase());
-
+  const C    = window.GWINRL_CONFIG || {};
   const qp   = new URLSearchParams(location.search);
   const code = (qp.get("code") || "").toUpperCase();
-  const isReferral = code && codes.includes(code);
 
-  const groups = C.stripe || {};
-  const table  = isReferral ? groups.referral : groups.normal; // {starter, pro, vip, elite}
+  const isRef = (C.codes || []).map(x => x.toUpperCase()).includes(code);
+  const group = isRef ? (C.stripe && C.stripe.referral)
+                      : (C.stripe && C.stripe.normal);
 
   const plan = pickPlan();
-  if (!table || !plan) return null;
-
-  let url = table[plan] || null;
-  if (!url) return null;
-
-  // Optionnel: propager le code dans l'URL Stripe (si compatible)
-  if (code) {
-    url += (url.includes("?") ? "&" : "?") + "ref=" + encodeURIComponent(code);
-  }
-  return url;
+  if (!plan || !group || !group[plan]) return null;
+  return group[plan];
 }
 
-// === Activer / désactiver "Payer (Stripe)" selon plan + waiver + lien dispo
+</script>
+// === Activer / désactiver "Payer (Stripe)" ===
 function updatePay(){
   const hasPlan = !!pickPlan();
   const waived  = waiver && waiver.checked;
   const url     = selectedStripeUrl();
 
-  // Activer seulement si OK
-  payBtn.disabled = !(hasPlan && waived && url);
-
-  // Si c'est un <a id="pay">, garder un href à jour
-  if (payBtn.tagName && payBtn.tagName.toLowerCase() === "a") {
-    payBtn.setAttribute("href", url || "#");
+  if (payBtn) {
+    payBtn.disabled = !(hasPlan && waived && url);
   }
 }
 
-// === Écoutes
+// Écoute des radios et de la case à cocher
 planRadios.forEach(r => r.addEventListener("change", updatePay));
 if (waiver) waiver.addEventListener("change", updatePay);
 
-// === Clic "Payer (Stripe)" si c'est un <button>
-payBtn.addEventListener("click", (e) => {
-  const url = selectedStripeUrl();
-  if (!url || payBtn.disabled) {
-    e.preventDefault();
-    return;
-  }
-  window.location.href = url;
-});
+// Clic pay → redirection Stripe
+if (payBtn){
+  payBtn.addEventListener("click", (e)=>{
+    const url = selectedStripeUrl();
+    if (!url || payBtn.disabled) {
+      e.preventDefault();
+      return;
+    }
+    window.location.href = url;
+  });
+}
 
 // Premier passage
 updatePay();
-</script>
-
   // Initial render
   render();
   </script>

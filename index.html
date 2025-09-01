@@ -218,6 +218,11 @@
   </div>
 
   <script>
+  // Références aux éléments du DOM
+const apply     = document.querySelector("#apply");   // (peut être null si pas utilisé)
+const waiver    = document.querySelector("#waiver");  // case à cocher
+const payBtn    = document.querySelector("#pay");     // bouton Stripe
+const cryptoBtn = document.querySelector("#crypto");  // bouton crypto
   // ======= Textes par langue =======
   const T = {
     fr: {

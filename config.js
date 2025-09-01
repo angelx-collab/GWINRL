@@ -7,16 +7,16 @@ window.GWINRL_CONFIG = {
   // normal = prix public ; referral = prix remisé (ou lien avec coupon appliqué)
   stripe: {
     normal:   {
-      starter: https://buy.stripe.com/28EeVc6nTcdp5PcdWO3Nm02, 
-      pro:     https://buy.stripe.com/aFaaEW3bHelx6Tgf0S3Nm03,
-      vip:     https://buy.stripe.com/aFadR84fLelx4L87yq3Nm04,
-      elite:   https://buy.stripe.com/aFa8wO27D3GT0uS2e63Nm05
+      starter: "https://buy.stripe.com/28EeVc6nTcdp5PcdWO3Nm02", 
+      pro:     "https://buy.stripe.com/aFaaEW3bHelx6Tgf0S3Nm03",
+      vip:     "https://buy.stripe.com/aFadR84fLelx4L87yq3Nm04",
+      elite:   "https://buy.stripe.com/aFa8wO27D3GT0uS2e63Nm05"
     },
     referral: {
-      starter: https://buy.stripe.com/7sY3cu4fL4KXdhE5qi3Nm06,
-      pro:     https://buy.stripe.com/28E28q5jPfpB7Xk4me3Nm07,
-      vip:     https://buy.stripe.com/5kQ4gy7rX3GTa5s4me3Nm08,
-      elite:   https://buy.stripe.com/6oU6oG27Db9l7Xk1a23Nm09
+      starter: "https://buy.stripe.com/7sY3cu4fL4KXdhE5qi3Nm06",
+      pro:     "https://buy.stripe.com/28E28q5jPfpB7Xk4me3Nm07",
+      vip:     "https://buy.stripe.com/5kQ4gy7rX3GTa5s4me3Nm08",
+      elite:   "https://buy.stripe.com/6oU6oG27Db9l7Xk1a23Nm09"
     }
   },
 

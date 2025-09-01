@@ -224,13 +224,9 @@ const waiver    = document.querySelector("#waiver");  // case à cocher
 const payBtn    = document.querySelector("#pay");     // bouton Stripe
 const cryptoBtn = document.querySelector("#crypto");  // bouton crypto
 <!-- === Activation bouton + redirection Stripe (NOUVELLE LOGIQUE) === -->
-<script>
 // radios des packs
-
-// ===== Récupération des éléments =====
 const planRadios = Array.from(document.querySelectorAll('input[name="plan"]'));
-const waiver     = document.querySelector('#waiver');   // case légale
-const payBtn     = document.querySelector('#pay');      // bouton Stripe
+
 
 // ===== Plan sélectionné =====
 function pickPlan(){

@@ -228,34 +228,52 @@ const cryptoBtn = document.querySelector("#crypto");  // bouton crypto
 // radios des packs
 const planRadios = Array.from(document.querySelectorAll('input[name="plan"]'));
 
-// plan sélectionné
+// ===== Récupération des éléments =====
+const planRadios = Array.from(document.querySelectorAll('input[name="plan"]'));
+const waiver     = document.querySelector('#waiver');   // case légale
+const payBtn     = document.querySelector('#pay');      // bouton Stripe
+
+// ===== Plan sélectionné =====
 function pickPlan(){
   const r = planRadios.find(x => x.checked);
-  return r ? r.value : null; // "starter" / "pro" / "vip" / "elite" ou null
+  return r ? r.value : null; // "starter" | "pro" | "vip" | "elite" | null
 }
 
-// URL Stripe selon plan + éventuel ?code=REF
+// ===== URL Stripe selon plan + éventuel ?code=REF =====
 function selectedStripeUrl(){
-  const C = window.GWINRL_CONFIG || {};
-  const qp = new URLSearchParams(location.search);
-  const code = (qp.get("code") || "").toUpperCase();
+  const C     = window.GWINRL_CONFIG || {};
+  const qp    = new URLSearchParams(location.search);
+  const code  = (qp.get("code") || "").toUpperCase();
   const isRef = (C.codes || []).map(x=>x.toUpperCase()).includes(code);
-  const group = isRef ? (C.stripe && C.stripe.referral) : (C.stripe && C.stripe.normal);
 
-  const plan = pickPlan();
+  const group = isRef ? (C.stripe && C.stripe.referral)
+                      : (C.stripe && C.stripe.normal);
+
+  const plan  = pickPlan();
   if (!plan || !group || !group[plan]) return null;
   return group[plan];
 }
 
-// (dés)active le bouton selon plan + case légale
+// ===== Active/désactive le bouton selon plan + case =====
 function updatePayState(){
-  const enabled = !!pickPlan() && waiver && waiver.checked;
+  const enabled = !!pickPlan() && !!(waiver && waiver.checked);
   if (payBtn) payBtn.disabled = !enabled;
 }
 
-// écoutes
+// Écoutes
 planRadios.forEach(r => r.addEventListener('change', updatePayState));
 if (waiver) waiver.addEventListener('change', updatePayState);
+
+// Clic pay → redirection Stripe
+if (payBtn){
+  payBtn.addEventListener('click', () => {
+    const url = selectedStripeUrl();
+    if (url) window.location.href = url;
+  });
+}
+
+// Mise à jour initiale
+updatePayState();
 
 // clic pay
 if (payBtn){

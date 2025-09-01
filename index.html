@@ -49,19 +49,33 @@
   gap: 20px;
 }
 
-.pack {
-  background: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 15px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+.packs{
+  margin:20px 0;
+  display:grid;
+  grid-template-columns:1fr;  /* mobile */
+  gap:16px;
+}
+@media (min-width:860px){
+  .packs{ grid-template-columns:1fr 1fr; } /* desktop: 2 colonnes */
 }
 
-.pack h3 {
-  margin-top: 0;
-  color: #1a3d7c; /* bleu foncé */
-  font-size: 1.2em;
+.pack{
+  background:var(--panel);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:14px;
+  padding:18px 16px;
+  color:var(--ink);
+  box-shadow:0 2px 10px rgba(0,0,0,.12);
 }
+.pack h3{
+  margin:0 0 10px;
+  font-size:20px;
+  line-height:1.2;
+}
+.pack ul{ list-style:disc; padding-left:18px; margin:0; }
+.pack li{ margin:8px 0; color:var(--ink); opacity:1; }
+
+.container{ padding-bottom:160px; } /* pour que la barre CTA n’empiète pas */
 
 .pack ul {
   margin: 0;
